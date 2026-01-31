@@ -15,6 +15,10 @@ class Display:
         self.display.lcd_backlight()
         return None
 
+    def clear(self):
+        self.display.lcd_clear()
+        return None
+
     def message(self,
                 text:str, #16 char max
                 line:str, # 1|2
@@ -23,6 +27,4 @@ class Display:
             display = self.display
             print("Writing to display")
             display.lcd_display_string(f"{text}", line)
-            display.lcd_display_string(f"{text}", line)
             sleep(duration)
-            display.lcd_clear()
