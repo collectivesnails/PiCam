@@ -1,4 +1,10 @@
 #! /usr/bin/env python
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "time",
+# ]
+# ///
 from lcd import drivers
 from time import sleep
 

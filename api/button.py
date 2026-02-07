@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "gpiozero",
+# ]
+# ///
 from gpiozero import Button
 import constants
 

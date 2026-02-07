@@ -1,13 +1,18 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "picamera2",
+# ]
+# ///
 from picamera2 import Picamera2
 from picamera2.encoders import H264Encoder, Quality
 import constants
 
 class Camera:
 
-    def __init__(self,
-                mode # still | video
+    def __init__(self
                 ):
-        self.mode = mode
+        self = self
     
     def _activate(self):
         picam2 = Picamera2()
@@ -24,7 +29,8 @@ class Camera:
 
     def start_video(self):
         picam2 = self._activate
-        picam2.configure(picam2.create_video_configuration())
+        video_config = picam2.create_video_configuration() #ToDo: Attribute not found
+        picam2.configure(video_config)
         encoder = H264Encoder()
         today = constants.today
         video_file = picam2.start_recording(encoder, f'video.{today}', quality=Quality.HIGH)

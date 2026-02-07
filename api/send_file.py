@@ -1,4 +1,10 @@
-from vault_dir import vault
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "os",
+# ]
+# ///
+import vault_dir as vault
 import os
 
 class Immich:

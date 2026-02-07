@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "datetime",
+# ]
+# ///
 from datetime import date
 
 today = date.today()

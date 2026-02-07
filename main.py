@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "gpiozero"
+# ]
+# ///
 """PiCam"""
 from api import button
 from api import camera
@@ -22,7 +28,10 @@ def _activate_display():
     return lcd
 
 def _activate_buttons():
-    buttons = button.Button_Handler(PINS)
+    buttons = list()
+    for pin in PINS:
+        current_pin = button.Button_Handler(pin)
+        buttons.append(current_pin)
     #buttons.when_pressed()
     return buttons
 
@@ -47,24 +56,28 @@ def _boot():
 
 def main():
     # Initialize
-    lcd = _activate_display()
-    buttons = _activate_buttons()
-    cam = _activate_camera()
-    
-    # Boot message
-    lcd.message(text='Initializing PiCam',line=1,duration=3)
-    path = os.getcwd()
-    info = os.statvfs(path)
-    MB_free = round((info.f_bavail * info.f_frsize)/1000000,1)
-    lcd.message(text=f'{MB_free}MB available',line=2,duration=3)
-    lcd.clear()
-    lcd.message(text='Starting Video',line=1,duration=3)
+    try:
+        lcd = _activate_display()
+        buttons = _activate_buttons()
+        cam = _activate_camera()
+        
+        # Boot message
+        lcd.message(text='Initializing PiCam',line=1,duration=3)
+        path = os.getcwd()
+        info = os.statvfs(path)
+        MB_free = round((info.f_bavail * info.f_frsize)/1000000,1)
+        lcd.message(text=f'{MB_free}MB available',line=2,duration=3)
+        lcd.clear()
+        lcd.message(text='Starting Video',line=1,duration=3)
 
-    # Start Camera
-    video = cam.start_video()
-    lcd.clear()
-    
-    # Menu
-    lcd.message(text=' 1   2   3   4  ',line=1,duration=5)
+        # Start Camera
+        video = cam.start_video()
+        lcd.clear()
+        
+        # Menu
+        lcd.message(text=' 1   2   3   4  ',line=1,duration=5)
+    except Exception:
+        lcd.clear()
+
 
 main()
