@@ -5,8 +5,10 @@
 # ]
 # ///
 """PiCam"""
+
+from picamera2_project.picamera2 import Picamera2
+from picamera2_project.picamera2.encoders import H264Encoder, Quality
 from api import button
-from api import camera
 from api import display
 from api import send_file
 import constants
@@ -16,7 +18,58 @@ PINS = constants.PINS
 
 
 lcd = display.Display()
-cam = camera.Camera()
+
+
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "picamera2",
+# ]
+# ///
+
+
+class Camera:
+
+    def __init__(self
+                ):
+        self = self
+        picamera2 = Picamera2()
+        self.picamera2 = picamera2
+
+    def picture(self):
+        picamera2 = self.picamera2 #Picamera2()
+        camera_config = picamera2.create_preview_configuration({"size":(320,180)})
+        picamera2.configure(camera_config)
+        picamera2.start()
+        today = constants.today
+        image_file = picamera2.capture_file(f'image.{today}.jpg')
+        return image_file
+
+    def start_video(self):
+        picamera2 = self.picamera2 #Picamera2()
+        video_config = picamera2.create_video_configuration() #ToDo: Attribute not found
+        picamera2.configure(video_config)
+        encoder = H264Encoder()
+        today = constants.today
+        video_file = picamera2.start_recording(encoder, f'video.{today}', quality=Quality.HIGH)
+        return picamera2, video_file
+
+    def stop_video(self):
+        picamera2 = self.picamera2
+        picamera2.stop_recording()
+        return picamera2
+    
+
+
+
+
+
+
+
+
+
+
+
 
 ###############################################
 
@@ -36,7 +89,7 @@ def _activate_buttons():
     return buttons
 
 def _activate_camera():
-    cam = camera.Camera()
+    cam = Camera()
     #image = cam.picture()
     #picam2, video_file = cam.start_video()
     #picam2 = cam.stop_video()
