@@ -6,8 +6,8 @@
 # ///
 """PiCam"""
 
-from picamera2.picamera2 import Picamera2
-from picamera2.picamera2.encoders import H264Encoder, Quality
+from picamera2 import Picamera2
+from picamera2.encoders import H264Encoder, Quality
 from api import button
 from api import display
 from api import send_file
@@ -88,13 +88,6 @@ def _activate_buttons():
     #buttons.when_pressed()
     return buttons
 
-def _activate_camera():
-    cam = Camera()
-    #image = cam.picture()
-    #picam2, video_file = cam.start_video()
-    #picam2 = cam.stop_video()
-    return cam
-
     file = None # ToDo: Set file variable based on Camera usage.
     file_share = send_file.Immich.send_file(file=file)
 
@@ -112,7 +105,7 @@ def main():
     try:
         lcd = _activate_display()
         buttons = _activate_buttons()
-        cam = _activate_camera()
+        cam = Camera()
         
         # Boot message
         lcd.message(text='Initializing PiCam',line=1,duration=3)
